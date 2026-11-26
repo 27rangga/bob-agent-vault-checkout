@@ -5,8 +5,12 @@ import { CODE, REPO_SLUG, assertCode, attributionSuffix, decodeSuffix } from '..
 
 test('code is derived from the repo slug (sha256, first 12 hex)', () => {
   assert.equal(codeFromRepo(REPO_SLUG), 'celo_d03a2a1ad16b')
-  assert.equal(CODE, 'celo_d03a2a1ad16b')
-  assert.equal(assertCode(), 'celo_d03a2a1ad16b')
+  // Active code: the site-issued code when ATTRIBUTION_CODE is set
+  // (loops.house registration, 26 Nov 2026: celo_e07a8049a2b1),
+  // otherwise the repo-derived code.
+  const expected = process.env.ATTRIBUTION_CODE ?? 'celo_d03a2a1ad16b'
+  assert.equal(CODE, expected)
+  assert.equal(assertCode(), expected)
 })
 
 test('suffix round-trips through decode', () => {
@@ -14,7 +18,8 @@ test('suffix round-trips through decode', () => {
   assert.equal(typeof suffix, 'string')
   assert.ok(suffix.startsWith('0x'))
   const decoded = decodeSuffix(suffix)
-  assert.deepEqual(decoded?.codes, ['celo_d03a2a1ad16b'])
+  const expected = process.env.ATTRIBUTION_CODE ?? 'celo_d03a2a1ad16b'
+  assert.deepEqual(decoded?.codes, [expected])
 })
 
 test('toDataSuffix/fromDataSuffix agree with the SDK directly', () => {

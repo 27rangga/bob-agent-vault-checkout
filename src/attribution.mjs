@@ -9,9 +9,11 @@
  *
  * The code is asserted against the repo slug at startup (see assertCode):
  * a copied or stale code tags transactions that credit nobody, and nothing
- * on-chain tells you. If loops.house assigns a different code at
- * registration, set ATTRIBUTION_CODE to that value instead — the repo-derived
- * code stays in the suffix too, so both ride the same transaction.
+ * on-chain tells you. Loops House assigned a different code at registration
+ * (26 Nov 2026): celo_e07a8049a2b1 — set ATTRIBUTION_CODE to that value;
+ * the repo-derived code remains the fallback when ATTRIBUTION_CODE is unset.
+ * The x402 builder-code extension carries only the active CODE (one code);
+ * the derived code is not also attached.
  */
 import { codeFromRepo, toDataSuffix, fromDataSuffix } from '@celo/attribution-tags'
 

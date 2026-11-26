@@ -27,10 +27,12 @@ Bob (agent, ERC-8004 identity pending — see Status)
 ## Attribution
 
 - Repo: `27rangga/bob-agent-vault-checkout`
-- Code: **`celo_d03a2a1ad16b`** — `sha256("27rangga/bob-agent-vault-checkout")[:12]`
-- The code is asserted against the repo slug at startup (`src/attribution.mjs`).
-  If loops.house assigns a different code at registration, set
-  `ATTRIBUTION_CODE` — the repo-derived code stays in the suffix too.
+- Active code: **`celo_e07a8049a2b1`** — assigned by loops.house at registration
+  (26 Nov 2026); set via `ATTRIBUTION_CODE` in `.env`.
+- Repo-derived code: `celo_d03a2a1ad16b` — `sha256("27rangga/bob-agent-vault-checkout")[:12]`,
+  the fallback when `ATTRIBUTION_CODE` is unset.
+- The code is asserted at startup (`src/attribution.mjs`): the active code is
+  used when set, otherwise the derived code must match the repo slug.
 
 ## Files
 
@@ -83,7 +85,7 @@ The buyer needs a little USDC on the chosen network and **no CELO**
 | Item | State |
 | --- | --- |
 | Public repo + code | ✅ Done — this repo |
-| Attribution code `celo_d03a2a1ad16b` | ✅ Derived + asserted + tested |
+| Attribution code `celo_e07a8049a2b1` (site-issued) | ✅ Active + asserted + tested (repo-derived `celo_d03a2a1ad16b` is the fallback) |
 | x402 seller ($0.01, builder-code in 402) | ✅ Done + tested offline (7/7) |
 | x402 buyer (spend-capped, builder code attached) | ✅ Done; live payment not yet run |
 | Live preflight (Sepolia facilitator + USDC) | ✅ OK 26 Nov (facilitator 200, USDC has code) |

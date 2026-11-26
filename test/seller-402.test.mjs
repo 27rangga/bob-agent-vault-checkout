@@ -31,10 +31,12 @@ test('GET /premium without payment returns 402 with the price + builder code', a
   assert.equal(accept.payTo.toLowerCase(), '0xe77e25b6430999edb061bfe47b9378320cd88923')
 
   // Builder-code extension declares this project's attribution code.
+  // Active code: site-issued celo_e07a8049a2b1 when ATTRIBUTION_CODE is set,
+  // otherwise the repo-derived celo_d03a2a1ad16b.
   const ext = challenge.extensions?.['builder-code']
   assert.ok(ext, '402 must declare the builder-code extension')
   assert.equal(ext.info.a, CODE)
-  assert.equal(ext.info.a, 'celo_d03a2a1ad16b')
+  assert.equal(ext.info.a, process.env.ATTRIBUTION_CODE ?? 'celo_d03a2a1ad16b')
 
   // The mirrored JSON body carries the same challenge.
   const body = await res.json()
